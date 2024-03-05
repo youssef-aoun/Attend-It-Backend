@@ -214,4 +214,10 @@ public class User {
             eventsSaved = new HashSet<>();
         eventsSaved.add(event);
     }
+
+    public void addReviewByUser(EventReviews review){
+        if(reviews == null)
+            reviews = new HashSet<>();
+        reviews.add(review);
+    }
 }
