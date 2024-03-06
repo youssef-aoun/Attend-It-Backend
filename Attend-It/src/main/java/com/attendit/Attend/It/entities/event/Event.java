@@ -52,7 +52,7 @@ public class Event {
     @JoinTable(
             name = "attended_by",
             joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            inverseJoinColumns = @JoinColumn(name = "attendee_id")
     )
     private Set<User> attendees;
 

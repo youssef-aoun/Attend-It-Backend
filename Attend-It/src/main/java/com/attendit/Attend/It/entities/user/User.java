@@ -39,7 +39,7 @@ public class User {
     private String aboutMe;
 
     @Column(name = "verified")
-    private boolean verified;
+    private boolean verified = false;
 
     @Column(name = "image")
     private String image;
@@ -52,7 +52,7 @@ public class User {
                     CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "attended_by",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "attendee_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id")
     )
     private Set<Event> eventsAttended;
