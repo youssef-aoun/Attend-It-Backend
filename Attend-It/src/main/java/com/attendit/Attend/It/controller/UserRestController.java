@@ -46,10 +46,12 @@ public class UserRestController {
     public String deleteUser(@PathVariable int userId){
         User user = userService.findUserById(userId);
         if(user == null){
-            throw new RuntimeException("User could not be deleted, id not found!");
+            return "User with ID " + userId + " not found!";
         }
-        userService.deleteUserById(userId);
-        return "Deleted!";
+        else {
+            userService.deleteUserById(userId);
+            return "Deleted!";
+        }
     }
 
 }
