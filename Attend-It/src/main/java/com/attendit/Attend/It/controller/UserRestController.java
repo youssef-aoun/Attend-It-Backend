@@ -1,6 +1,6 @@
 package com.attendit.Attend.It.controller;
 
-import com.attendit.Attend.It.service.UserService;
+import com.attendit.Attend.It.service.user.UserService;
 import com.attendit.Attend.It.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

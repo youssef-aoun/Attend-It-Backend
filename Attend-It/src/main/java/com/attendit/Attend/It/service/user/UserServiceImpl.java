@@ -1,4 +1,4 @@
-package com.attendit.Attend.It.service;
+package com.attendit.Attend.It.service.user;
 
 import com.attendit.Attend.It.dao.UserRepository;
 import com.attendit.Attend.It.entities.user.User;
