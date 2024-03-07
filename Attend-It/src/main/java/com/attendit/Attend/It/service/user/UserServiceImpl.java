@@ -2,7 +2,6 @@ package com.attendit.Attend.It.service.user;
 
 import com.attendit.Attend.It.dao.UserRepository;
 import com.attendit.Attend.It.entities.user.User;
-import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

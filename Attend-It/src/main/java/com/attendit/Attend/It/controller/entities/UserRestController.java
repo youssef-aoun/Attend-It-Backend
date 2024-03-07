@@ -1,7 +1,6 @@
 package com.attendit.Attend.It.controller.entities;
 
 import com.attendit.Attend.It.dto.SignupRequest;
-import com.attendit.Attend.It.dto.LoginRequest;
 import com.attendit.Attend.It.service.user.UserService;
 import com.attendit.Attend.It.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,22 +57,12 @@ public class UserRestController {
         }
     }
 
-    /*@GetMapping("/users/login")
-    public User loginUser(@RequestBody String username, @RequestBody String password){
-        User user = userService.findUserByUsernameAndPassword(username, password);
-        if(user == null){
-            throw new RuntimeException("User with username " + username +" is not found");
-        }
-        return user;
-    }*/
-
-
     @PostMapping("/users/signup")
     public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
 
         if(userService.findUserByUsername(signupRequest.getUsername()) == null &&
         userService.findUserByEmail(signupRequest.getEmail()) == null) {
-            // Extract user details from the signup request
+
             String username = signupRequest.getUsername();
             String password = signupRequest.getPassword();
             String firstName = signupRequest.getFirstName();
