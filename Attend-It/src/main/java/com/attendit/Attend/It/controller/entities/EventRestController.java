@@ -1,4 +1,4 @@
-package com.attendit.Attend.It.controller;
+package com.attendit.Attend.It.controller.entities;
 
 import com.attendit.Attend.It.entities.event.Event;
 import com.attendit.Attend.It.service.event.EventService;

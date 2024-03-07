@@ -9,4 +9,7 @@ public interface UserService {
     User save(User user);
     User findUserById(int id);
     void deleteUserById(int id);
+    User findUserByUsername(String username);
+    User findUserByUsernameAndPassword(String username, String password);
+    User findUserByEmail(String email);
 }

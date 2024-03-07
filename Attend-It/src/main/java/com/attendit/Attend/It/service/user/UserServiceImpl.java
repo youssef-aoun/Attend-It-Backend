@@ -2,6 +2,7 @@ package com.attendit.Attend.It.service.user;
 
 import com.attendit.Attend.It.dao.UserRepository;
 import com.attendit.Attend.It.entities.user.User;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,6 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
-
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -34,9 +34,23 @@ public class UserServiceImpl implements UserService{
         return result.orElse(null);
     }
 
+    @Override
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
     @Override
     public void deleteUserById(int id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User findUserByUsernameAndPassword(String username, String password) {
+        return userRepository.findUserByUsernameAndPassword(username, password);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 }
