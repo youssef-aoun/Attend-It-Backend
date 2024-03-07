@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,9 @@ public class LoginRestController {
     private boolean customAuthenticationLogic(String username, String password) {
         // Implement your custom authentication logic here
         // For example, you can check if the provided username and password match a user record in your database
-        User user = userService.findUserByUsernameAndPassword(username, password);
-        return user != null;
+        User user = userService.findUserByUsername(username);
+        if(user != null && (new BCryptPasswordEncoder().matches(password, user.getPassword())))
+            return true;
+        return false;
     }
 }

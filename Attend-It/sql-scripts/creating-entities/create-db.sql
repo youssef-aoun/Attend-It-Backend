@@ -10,10 +10,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 CREATE TABLE user (
                       id INT PRIMARY KEY AUTO_INCREMENT,
                       username VARCHAR(255) UNIQUE,
-                      first_name VARCHAR(255),
-                      last_name VARCHAR(255),
+                      first_name VARCHAR(255) NOT NULL ,
+                      last_name VARCHAR(255) NOT NULL ,
                       email VARCHAR(255) UNIQUE,
-                      password VARCHAR(255),
+                      password char(68) NOT NULL ,
                       phone_number VARCHAR(20),
                       about_me TEXT,
                       verified BOOLEAN,
@@ -23,14 +23,14 @@ CREATE TABLE user (
 -- Create the event table
 CREATE TABLE Event (
                        id INT PRIMARY KEY AUTO_INCREMENT,
-                       title VARCHAR(255),
-                       date DATE,
-                       time TIME,
-                       location VARCHAR(255),
+                       title VARCHAR(255) NOT NULL ,
+                       date DATE NOT NULL ,
+                       time TIME NOT NULL ,
+                       location VARCHAR(255) NOT NULL ,
                        description TEXT,
                        image VARCHAR(255),
                        date_of_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                       organizer_id INT,
+                       organizer_id INT NOT NULL,
                        category_id INT,
                        FOREIGN KEY (organizer_id) REFERENCES user(id),
                        FOREIGN KEY (category_id) REFERENCES category(id)

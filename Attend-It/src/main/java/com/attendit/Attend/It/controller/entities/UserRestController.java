@@ -6,6 +6,7 @@ import com.attendit.Attend.It.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,35 +58,6 @@ public class UserRestController {
         }
     }
 
-    @PostMapping("/users/signup")
-    public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
-
-        if(userService.findUserByUsername(signupRequest.getUsername()) == null &&
-        userService.findUserByEmail(signupRequest.getEmail()) == null) {
-
-            String username = signupRequest.getUsername();
-            String password = signupRequest.getPassword();
-            String firstName = signupRequest.getFirstName();
-            String lastName = signupRequest.getLastName();
-            String email = signupRequest.getEmail();
-
-            // Create a new user object with the extracted details
-            User newUser = new User(firstName, lastName, email, password);
-            newUser.setUsername(username);
-
-            // Save the new user in the database
-            userService.save(newUser);
-
-            // Return a success response
-            return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
-        }
-        else if(userService.findUserByUsername(signupRequest.getUsername()) != null){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is taken.");
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is taken.");
-        }
-    }
 
 
 

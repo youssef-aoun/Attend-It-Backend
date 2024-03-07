@@ -1,9 +1,9 @@
 USE `isd-entities`;
 
-INSERT INTO `user` (first_name, last_name, email, password, verified)
+INSERT INTO `user` (username, first_name, last_name, email, password, verified)
 VALUES
-    ('John', 'Doe', 'john@example.com', 'password1', false),
-    ('Alice', 'Smith', 'alice@example.com', 'password2', false),
-    ('Bob', 'Johnson', 'bob@example.com', 'password3', false),
-    ('Emily', 'Brown', 'emily@example.com', 'password4', false),
-    ('Michael', 'Davis', 'michael@example.com', 'password5', false);
+    ('johndoe','John', 'Doe', 'john@example.com', '{bcrypt}$2a$10$1cySlXFdnK50lKX4qLpqIOSunQIGMFfcJsxTo3phO3Ezjz9KGkcvK', false),
+    ('alicesmith','Alice', 'Smith', 'alice@example.com', '{bcrypt}$2a$10$1cySlXFdnK50lKX4qLpqIOSunQIGMFfcJsxTo3phO3Ezjz9KGkcvK', false),
+    ('bobjohnson','Bob', 'Johnson', 'bob@example.com', '{bcrypt}$2a$10$1cySlXFdnK50lKX4qLpqIOSunQIGMFfcJsxTo3phO3Ezjz9KGkcvK', false),
+    ('emilybrown','Emily', 'Brown', 'emily@example.com', '{bcrypt}$2a$10$1cySlXFdnK50lKX4qLpqIOSunQIGMFfcJsxTo3phO3Ezjz9KGkcvK', false),
+    ('michaeldavis','Michael', 'Davis', 'michael@example.com', '{bcrypt}$2a$10$1cySlXFdnK50lKX4qLpqIOSunQIGMFfcJsxTo3phO3Ezjz9KGkcvK', false);

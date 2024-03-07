@@ -1,5 +1,6 @@
 package com.attendit.Attend.It.dto;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -24,7 +25,7 @@ public class SignupRequest {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     public String getFirstName() {
