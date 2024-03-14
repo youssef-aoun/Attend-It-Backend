@@ -2,6 +2,7 @@ package com.attendit.Attend.It.entities.user;
 
 import com.attendit.Attend.It.entities.event.Event;
 import com.attendit.Attend.It.entities.event.EventReviews;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -45,6 +46,7 @@ public class User {
     private String image;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "organizer")
+    @JsonIgnore
     private Set<Event> eventsOrganized;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -55,6 +57,7 @@ public class User {
             joinColumns = @JoinColumn(name = "attendee_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id")
     )
+    @JsonIgnore
     private Set<Event> eventsAttended;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -65,9 +68,11 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id")
     )
+    @JsonIgnore
     private Set<Event> eventsSaved;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     Set<EventReviews> reviews;
 
     public User() {

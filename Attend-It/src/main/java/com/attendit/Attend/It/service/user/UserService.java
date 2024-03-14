@@ -12,4 +12,5 @@ public interface UserService {
     User findUserByUsername(String username);
     User findUserByUsernameAndPassword(String username, String password);
     User findUserByEmail(String email);
+    List<User> findAll(int pageNumber);
 }

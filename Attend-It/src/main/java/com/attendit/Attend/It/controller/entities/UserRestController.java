@@ -1,12 +1,8 @@
 package com.attendit.Attend.It.controller.entities;
 
-import com.attendit.Attend.It.dto.SignupRequest;
 import com.attendit.Attend.It.service.user.UserService;
 import com.attendit.Attend.It.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +18,11 @@ public class UserRestController {
     }
 
     @GetMapping("/users")
+    public List<User> users(@RequestParam(name = "page", defaultValue = "0") int pageNumber){
+        return userService.findAll(pageNumber);
+    }
+
+    @GetMapping("/all-users")
     public List<User> users(){
         return userService.findAll();
     }

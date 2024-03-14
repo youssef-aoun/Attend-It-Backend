@@ -1,5 +1,6 @@
 package com.attendit.Attend.It.entities.event;
 import com.attendit.Attend.It.entities.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -38,8 +39,9 @@ public class Event {
     @Column(name = "date_of_creation")
     private LocalDateTime dateOfCreation;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizer_id")
+    @JsonIgnore
     private User organizer;
 
     @ManyToOne
@@ -54,6 +56,7 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "attendee_id")
     )
+    @JsonIgnore
     private Set<User> attendees;
 
 
@@ -65,10 +68,13 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @JsonIgnore
     private Set<User> savedBy;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     Set<EventReviews> reviews;
+
+    private String status;
 
     public Event() {
     }
@@ -175,6 +181,22 @@ public class Event {
 
     public void setSavedBy(Set<User> savedBy) {
         this.savedBy = savedBy;
+    }
+
+    public String getStatus() {
+        setStatus(LocalDate.now());
+        return status;
+    }
+
+    public void setStatus(LocalDate currentDate) {
+        LocalDate machineDate = LocalDate.now();
+        if (date.isBefore(machineDate)) {
+            status = "done";
+        } else if (date.isEqual(machineDate)) {
+            status = "ongoing";
+        } else {
+            status = "upcoming";
+        }
     }
 
     @Override

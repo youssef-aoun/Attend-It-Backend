@@ -72,3 +72,4 @@ CREATE TABLE saved_events (
                               FOREIGN KEY (event_id) REFERENCES Event(id)
 );
 
+ALTER TABLE event ADD status varchar(255);

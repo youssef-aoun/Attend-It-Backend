@@ -4,7 +4,6 @@ import com.attendit.Attend.It.entities.event.Event;
 import com.attendit.Attend.It.service.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,8 +18,8 @@ public class EventRestController {
     }
 
     @GetMapping("/events")
-    public List<Event> events(){
-        return eventService.findAll();
+    public List<Event> events(@RequestParam(name = "page", defaultValue = "0") int pageNumber){
+        return eventService.findAll(pageNumber);
     }
 
     @GetMapping("/events/{eventId}")
@@ -53,5 +52,10 @@ public class EventRestController {
             eventService.deleteEventById(eventId);
             return "Deleted!";
         }
+    }
+
+    @GetMapping("/previous-events")
+    public List<Event> findPreviousEvents(@RequestParam(name = "page", defaultValue = "0") int pageNumber){
+        return eventService.findPreviousEvents(pageNumber);
     }
 }
