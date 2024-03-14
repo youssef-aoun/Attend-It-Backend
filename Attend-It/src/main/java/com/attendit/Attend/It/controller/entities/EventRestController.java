@@ -58,4 +58,9 @@ public class EventRestController {
     public List<Event> findPreviousEvents(@RequestParam(name = "page", defaultValue = "0") int pageNumber){
         return eventService.findPreviousEvents(pageNumber);
     }
+
+    @GetMapping("/all-events")
+    public List<Event> allEvents(){
+        return eventService.findAll();
+    }
 }

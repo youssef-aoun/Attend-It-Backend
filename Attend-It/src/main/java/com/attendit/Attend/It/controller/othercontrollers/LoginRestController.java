@@ -48,8 +48,6 @@ public class LoginRestController {
         // Implement your custom authentication logic here
         // For example, you can check if the provided username and password match a user record in your database
         User user = userService.findUserByUsername(username);
-        if(user != null && (new BCryptPasswordEncoder().matches(password, user.getPassword())))
-            return true;
-        return false;
+        return user != null && (new BCryptPasswordEncoder().matches(password, user.getPassword()));
     }
 }

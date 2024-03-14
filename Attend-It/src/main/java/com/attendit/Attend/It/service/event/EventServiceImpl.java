@@ -54,4 +54,6 @@ public class EventServiceImpl implements EventService{
     public List<Event> findPreviousEvents(int pageNumber) {
         return eventRepository.findEventByDateBefore(LocalDate.now());
     }
+
+
 }
