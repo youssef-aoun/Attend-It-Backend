@@ -22,7 +22,7 @@ VALUES ('Art Exhibition', '2024-09-15', '10:00', 'Art Gallery', 'Explore a diver
 
 
 INSERT INTO Event (title, date, time, location, description, organizer_id)
-VALUES ('Testing', '2024-03-14', '08:30', 'Testing', 'Get motivated and learn new fitness techniques in this interactive workshop led by certified trainers', 1)
+VALUES ('Testing', '2024-03-14', '08:30', 'Testing', 'Get motivated and learn new fitness techniques in this interactive workshop led by certified trainers', 1);
 
 INSERT INTO Event (title, date, time, location, description, organizer_id)
 VALUES ('Testing past', '2024-03-13', '08:30', 'Testing', 'Get motivated and learn new fitness techniques in this interactive workshop led by certified trainers', 1)
