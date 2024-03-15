@@ -3,6 +3,7 @@ package com.attendit.Attend.It.controller.othercontrollers;
 
 import com.attendit.Attend.It.dto.SignupRequest;
 import com.attendit.Attend.It.entities.user.User;
+import com.attendit.Attend.It.errorresponses.SignupErrorResponse;
 import com.attendit.Attend.It.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,24 +26,15 @@ public class SignupRestController {
 
     @PostMapping("/users/signup")
     public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
-        System.out.println(signupRequest.getPassword());
-        if(userService.findUserByUsername(signupRequest.getUsername()) == null &&
-                userService.findUserByEmail(signupRequest.getEmail()) == null) {
-
+        if(userService.findUserByUsername(signupRequest.getUsername()) != null)
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new SignupErrorResponse("Username is taken."));
+        else if(userService.findUserByEmail(signupRequest.getEmail()) != null)
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new SignupErrorResponse("Email is taken."));
+        else{
             User newUser = getUser(signupRequest);
-
-
-            // Save the new user in the database
             userService.save(newUser);
-
             // Return a success response
             return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
-        }
-        else if(userService.findUserByUsername(signupRequest.getUsername()) != null){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is taken.");
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is taken.");
         }
     }
 

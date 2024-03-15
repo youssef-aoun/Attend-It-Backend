@@ -1,16 +1,27 @@
 package com.attendit.Attend.It.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class SignupRequest {
 
-    private String username;
-    private String password;
+    @NotEmpty
     private String firstName;
+
+    @NotEmpty
     private String lastName;
+
+    @Pattern(regexp = "\\S+", message = "Username must not contain spaces")
+    private String username;
+
+    @Email(message = "Invalid email format")
     private String email;
+
+    private String password;
 
     public String getUsername() {
         return username;
