@@ -2,6 +2,7 @@ package com.attendit.Attend.It.controller.othercontrollers;
 
 import com.attendit.Attend.It.dto.LoginRequest;
 import com.attendit.Attend.It.entities.user.User;
+import com.attendit.Attend.It.errorresponses.LoginErrorResponse;
 import com.attendit.Attend.It.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class LoginRestController {
 
         if (!isAuthenticated) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Invalid username or password");
+                    .body(new LoginErrorResponse("Invalid username or password"));
         }
 
         // If authentication is successful, you can proceed with setting up authentication context
