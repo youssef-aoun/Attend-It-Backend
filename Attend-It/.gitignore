@@ -30,8 +30,7 @@ build/
 !**/src/test/**/build/
 application.properties
 
-### VS Code ###
-.vscode/
+
 /src/main/java/com/attendit/Attend/It/security/SecurityConfig.java
 /src/main/java/com/attendit/Attend/It/service/authentication/AuthenticationService.java
 /src/main/java/com/attendit/Attend/It/dto/ResetPasswordRequest.java
@@ -39,3 +38,6 @@ application.properties
 /sql-scripts/creating-entities/insert-categories.sql
 /sql-scripts/creating-entities/insert-events.sql
 /sql-scripts/creating-entities/insert-users.sql
+
+### VS Code ###
+.vscode/
