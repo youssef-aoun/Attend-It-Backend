@@ -36,6 +36,9 @@ public class Event {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "number_of_seats")
+    private int numberOfSeats;
+
     @Column(name = "date_of_creation")
     private LocalDateTime dateOfCreation;
 
@@ -46,6 +49,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -72,6 +76,7 @@ public class Event {
     private Set<User> savedBy;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @JsonIgnore
     Set<EventReviews> reviews;
 
     private String status;
@@ -143,6 +148,22 @@ public class Event {
         this.image = image;
     }
 
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public Set<EventReviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<EventReviews> reviews) {
+        this.reviews = reviews;
+    }
+
     public LocalDateTime getDateOfCreation() {
         return dateOfCreation;
     }
@@ -208,6 +229,12 @@ public class Event {
                 ", time=" + time +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", dateOfCreation=" + dateOfCreation +
+                ", organizer=" + organizer +
+                ", category=" + category +
+                ", status='" + status + '\'' +
                 '}';
     }
 

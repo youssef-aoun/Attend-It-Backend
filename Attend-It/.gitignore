@@ -33,3 +33,9 @@ application.properties
 ### VS Code ###
 .vscode/
 /src/main/java/com/attendit/Attend/It/security/SecurityConfig.java
+/src/main/java/com/attendit/Attend/It/service/authentication/AuthenticationService.java
+/src/main/java/com/attendit/Attend/It/dto/ResetPasswordRequest.java
+/sql-scripts/creating-entities/create-db.sql
+/sql-scripts/creating-entities/insert-categories.sql
+/sql-scripts/creating-entities/insert-events.sql
+/sql-scripts/creating-entities/insert-users.sql

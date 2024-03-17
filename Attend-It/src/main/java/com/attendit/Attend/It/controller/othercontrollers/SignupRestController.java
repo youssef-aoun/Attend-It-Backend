@@ -2,8 +2,10 @@
 package com.attendit.Attend.It.controller.othercontrollers;
 
 import com.attendit.Attend.It.dto.SignupRequest;
+import com.attendit.Attend.It.entities.roles.Role;
 import com.attendit.Attend.It.entities.user.User;
 import com.attendit.Attend.It.errorresponses.SignupErrorResponse;
+import com.attendit.Attend.It.service.role.RoleService;
 import com.attendit.Attend.It.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignupRestController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public SignupRestController(UserService userService) {
+    public SignupRestController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @PostMapping("/users/signup")
@@ -32,6 +36,8 @@ public class SignupRestController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new SignupErrorResponse("Email is taken."));
         else{
             User newUser = getUser(signupRequest);
+            Role role = roleService.findRoleByName("user");
+            newUser.addRole(role);
             userService.save(newUser);
             // Return a success response
             return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
@@ -52,6 +58,7 @@ public class SignupRestController {
         newUser.setUsername(username);
         newUser.setEmail(email);
         newUser.setPassword(password);
+        newUser.setEnabled(true);
         return newUser;
     }
 
