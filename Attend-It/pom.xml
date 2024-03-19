@@ -108,11 +108,12 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.12.5</version>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>5.7.7</version>
-        </dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>6.2.2</version>
+		</dependency>
 
 
         <!-- Remove the explicit dependency on Jakarta Servlet API -->

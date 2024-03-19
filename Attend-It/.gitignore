@@ -40,3 +40,5 @@ application.properties
 /sql-scripts/creating-entities/create-db.sql
 /sql-scripts/creating-entities/insert-events.sql
 /sql-scripts/creating-entities/insert-users.sql
+/src/main/java/com/attendit/Attend/It/security/authentication/AuthenticationService.java
+/src/main/java/com/attendit/Attend/It/security/authentication/AuthenticationServiceImpl.java

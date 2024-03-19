@@ -1,6 +1,7 @@
 package com.attendit.Attend.It.service.user;
 
 import com.attendit.Attend.It.dao.UserRepository;
+import com.attendit.Attend.It.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +20,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            return userRepository.findByUsername(username);
-        } catch (Exception e) {
-            throw new UsernameNotFoundException("User not found!");
+        // Retrieve user entity from the database
+        User user = userRepository.findByUsername(username);
+
+        // Check if the user exists
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
         }
+
+        // Return the UserDetails object
+        return user; // Assuming User implements UserDetails or you convert it to UserDetails
     }
 
 }
