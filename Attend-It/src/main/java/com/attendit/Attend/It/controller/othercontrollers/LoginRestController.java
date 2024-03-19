@@ -9,13 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,9 +46,7 @@ public class LoginRestController {
                     .body(new LoginErrorResponse("Invalid username or password"));
         }
         try {
-            System.out.println("Trial 1");
             UserDetails userDetails = authenticationService.authenticate(username, password);
-            System.out.println("Trial 2");
             // Set authentication object in SecurityContext
             SecurityContextHolder
                     .getContext()
@@ -61,7 +56,6 @@ public class LoginRestController {
                             userDetails.getAuthorities()));
             // Create session
             request.getSession(true);
-            System.out.println("Trial 4");
             // Return success response
             return ResponseEntity.ok().body("Logged in successfully");
         } catch (AuthenticationException e) {

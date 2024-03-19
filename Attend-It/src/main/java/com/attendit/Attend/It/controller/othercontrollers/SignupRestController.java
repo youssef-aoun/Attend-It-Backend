@@ -22,16 +22,7 @@ public class SignupRestController {
 
     private final UserService userService;
     private final RoleService roleService;
-    //private final JWTService jwtService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    /*@Autowired
-    public SignupRestController(UserService userService, RoleService roleService, JWTService jwtService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userService = userService;
-        this.roleService = roleService;
-        this.jwtService = jwtService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }*/
 
     @Autowired
     public SignupRestController(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
