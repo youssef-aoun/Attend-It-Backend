@@ -2,16 +2,22 @@ package com.attendit.Attend.It.entities.user;
 
 import com.attendit.Attend.It.entities.event.Event;
 import com.attendit.Attend.It.entities.event.EventReviews;
+import com.attendit.Attend.It.entities.roles.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +39,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -44,6 +53,7 @@ public class User {
 
     @Column(name = "image")
     private String image;
+
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "organizer")
     @JsonIgnore
@@ -74,6 +84,16 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     Set<EventReviews> reviews;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+
+    private Set<Role> roles;
 
     public User() {
     }
@@ -121,6 +141,29 @@ public class User {
         return email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Role userRole = null;
+        for(Role role: roles)
+            userRole = role;
+        return List.of(new SimpleGrantedAuthority(userRole.getName()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -158,6 +201,14 @@ public class User {
     }
 
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getImage() {
         return image;
     }
@@ -189,6 +240,24 @@ public class User {
 
     public void setEventsSaved(Set<Event> eventsSaved) {
         this.eventsSaved = eventsSaved;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+
+        this.roles = roles;
+    }
+
+
+    public Set<EventReviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<EventReviews> reviews) {
+        this.reviews = reviews;
     }
 
     @Override
@@ -225,4 +294,11 @@ public class User {
             reviews = new HashSet<>();
         reviews.add(review);
     }
+
+    public void addRole(Role role){
+        if(roles == null)
+            roles = new HashSet<>();
+        roles.add(role);
+    }
+
 }

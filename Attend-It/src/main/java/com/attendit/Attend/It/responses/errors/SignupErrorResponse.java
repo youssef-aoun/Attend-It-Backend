@@ -1,4 +1,4 @@
-package com.attendit.Attend.It.errorresponses;
+package com.attendit.Attend.It.responses.errors;
 
 public class SignupErrorResponse {
     private String message;

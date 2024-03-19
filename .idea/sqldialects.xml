@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/Attend-It/sql-scripts/creating-entities/create-db.sql" dialect="MariaDB" />
-    <file url="file://$PROJECT_DIR$/Attend-It/sql-scripts/creating-entities/insert-events.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/Attend-It/sql-scripts/creating-entities/insert-users.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Attend-It/sql-scripts/creating-entities/create-db.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Attend-It/sql-scripts/creating-entities/insert-users.sql" dialect="GenericSQL" />
   </component>
 </project>
