@@ -1,4 +1,5 @@
 package com.attendit.Attend.It.entities.event;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Category {
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH},
             mappedBy = "category")
+    @JsonIgnore
     private Set<Event> events;
 
 

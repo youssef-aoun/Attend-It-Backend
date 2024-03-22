@@ -85,7 +85,7 @@ public class User implements UserDetails {
     @JsonIgnore
     Set<EventReviews> reviews;
 
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
