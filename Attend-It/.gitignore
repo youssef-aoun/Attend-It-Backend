@@ -43,3 +43,4 @@ application.properties
 /src/main/java/com/attendit/Attend/It/security/authentication/AuthenticationService.java
 /src/main/java/com/attendit/Attend/It/security/authentication/AuthenticationServiceImpl.java
 events_images
+src/main/java/com/attendit/Attend/It/controller/othercontrollers/ImageController.java
