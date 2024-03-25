@@ -7,19 +7,14 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class SignupRequest {
-
     @NotEmpty
     private String firstName;
-
     @NotEmpty
     private String lastName;
-
     @Pattern(regexp = "\\S+", message = "Username must not contain spaces")
     private String username;
-
     @Email(message = "Invalid email format")
     private String email;
-
     private String password;
 
     public String getUsername() {

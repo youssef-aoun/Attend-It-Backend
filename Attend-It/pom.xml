@@ -98,6 +98,14 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.12.5</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.5</version>
+		</dependency>
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
@@ -114,6 +122,10 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>6.2.2</version>
 		</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
 
         <!-- Remove the explicit dependency on Jakarta Servlet API -->

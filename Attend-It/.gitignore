@@ -32,15 +32,10 @@ application.properties
 
 ### VS Code ###
 .vscode/
-/src/main/java/com/attendit/Attend/It/security/config/SecurityConfig.java
-/src/main/java/com/attendit/Attend/It/security/config/AuthenticationProviderImpl.java
-/src/main/java/com/attendit/Attend/It/security/config/PasswordEncoderConfig.java
-/src/main/java/com/attendit/Attend/It/security/jwt/JWTAuthenticationFilter.java
-/src/main/java/com/attendit/Attend/It/security/jwt/JWTService.java
 /sql-scripts/creating-entities/create-db.sql
 /sql-scripts/creating-entities/insert-events.sql
 /sql-scripts/creating-entities/insert-users.sql
-/src/main/java/com/attendit/Attend/It/security/authentication/AuthenticationService.java
-/src/main/java/com/attendit/Attend/It/security/authentication/AuthenticationServiceImpl.java
+/sql-scripts/creating-entities/inserting-roles.sql
+/src/main/java/com/attendit/Attend/It/security
 events_images
 src/main/java/com/attendit/Attend/It/controller/othercontrollers/ImageController.java

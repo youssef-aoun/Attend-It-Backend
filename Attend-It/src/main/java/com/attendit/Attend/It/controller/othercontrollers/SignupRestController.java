@@ -3,8 +3,8 @@ package com.attendit.Attend.It.controller.othercontrollers;
 
 import com.attendit.Attend.It.dto.SignupRequest;
 import com.attendit.Attend.It.entities.user.User;
-import com.attendit.Attend.It.responses.errors.SignupErrorResponse;
-import com.attendit.Attend.It.responses.normal.SignupResponse;
+import com.attendit.Attend.It.responses.Response;
+import com.attendit.Attend.It.security.authentication.AuthenticationService;
 import com.attendit.Attend.It.service.role.RoleService;
 import com.attendit.Attend.It.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,33 +21,35 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignupRestController {
 
     private final UserService userService;
-    private final RoleService roleService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationService authenticationService;
 
 
     @Autowired
-    public SignupRestController(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public SignupRestController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
-        this.roleService = roleService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.authenticationService = authenticationService;
     }
 
 
     @PostMapping("/users/signup")
-    public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<Response> signupUser(@RequestBody SignupRequest signupRequest) {
         if(userService.findUserByUsername(signupRequest.getUsername()) != null)
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new SignupErrorResponse("Username is taken."));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(signupResponseFailure("Username is taken."));
         else if(userService.findUserByEmail(signupRequest.getEmail()) != null)
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new SignupErrorResponse("Email is taken."));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(signupResponseFailure("Email is taken."));
         else{
-            User newUser = getUser(signupRequest);
-            String passworrd = bCryptPasswordEncoder.encode(newUser.getPassword());
-            newUser.setPassword(passworrd);
-            newUser.addRole(roleService.findRoleByName("ROLE_USER"));
-            userService.save(newUser);
+            Response response = authenticationService.signup(signupRequest);
             // Return a success response
-            return ResponseEntity.status(HttpStatus.CREATED).body(new SignupResponse("User registered successfully"));
+            return ResponseEntity.ok(response);
         }
+    }
+
+
+    private Response signupResponseFailure(String message){
+        Response signupResponse = new Response();
+        signupResponse.setMessage(message);
+        signupResponse.setStatus(409);
+        return signupResponse;
     }
 
     private static User getUser(SignupRequest signupRequest) {
