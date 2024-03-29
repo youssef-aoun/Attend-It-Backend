@@ -39,6 +39,9 @@ public class Event {
     @Column(name = "date_of_creation")
     private LocalDateTime dateOfCreation;
 
+    @Column(name = "number_of_seats")
+    private int numberOfSeats;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizer_id")
     @JsonIgnore
@@ -187,6 +190,14 @@ public class Event {
     public String getStatus() {
         setStatus(LocalDate.now());
         return status;
+    }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
     }
 
     public void setStatus(LocalDate currentDate) {
