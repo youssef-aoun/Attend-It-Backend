@@ -74,7 +74,7 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
-    public Event findEventByTitle(String eventTitle) {
+    public List<Event> findEventByTitle(String eventTitle) {
         return eventRepository.findEventByTitle(eventTitle);
     }
 
@@ -93,5 +93,15 @@ public class EventServiceImpl implements EventService{
     @Override
     public List<Event> findAllUpcomingEvents() {
         return eventRepository.findAllByDateAfter(LocalDate.now());
+    }
+
+    @Override
+    public List<Event> findEventsBySavedBy(User user) {
+        return eventRepository.findEventBySavedBy(user);
+    }
+
+    @Override
+    public List<Event> findEventsByAttendedBy(User user) {
+        return eventRepository.findEventByAttendees(user);
     }
 }

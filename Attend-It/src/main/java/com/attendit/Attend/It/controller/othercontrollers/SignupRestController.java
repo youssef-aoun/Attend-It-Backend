@@ -44,6 +44,31 @@ public class SignupRestController {
         }
     }
 
+    @PostMapping("/employees/signup")
+    public ResponseEntity<Response> signupEmployee(@RequestBody SignupRequest signupRequest) {
+        if(userService.findUserByUsername(signupRequest.getUsername()) != null)
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(signupResponseFailure("Username is taken."));
+        else if(userService.findUserByEmail(signupRequest.getEmail()) != null)
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(signupResponseFailure("Email is taken."));
+        else{
+            Response response = authenticationService.signupEmployee(signupRequest);
+            // Return a success response
+            return ResponseEntity.ok(response);
+        }
+    }
+
+    @PostMapping("/admin/signup")
+    public ResponseEntity<Response> signupAdmin(@RequestBody SignupRequest signupRequest) {
+        if(userService.findUserByUsername(signupRequest.getUsername()) != null)
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(signupResponseFailure("Username is taken."));
+        else if(userService.findUserByEmail(signupRequest.getEmail()) != null)
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(signupResponseFailure("Email is taken."));
+        else{
+            Response response = authenticationService.signupAdmin(signupRequest);
+            // Return a success response
+            return ResponseEntity.ok(response);
+        }
+    }
 
     private Response signupResponseFailure(String message){
         Response signupResponse = new Response();

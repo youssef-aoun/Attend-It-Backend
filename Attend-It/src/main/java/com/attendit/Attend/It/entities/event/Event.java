@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -61,7 +63,7 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "attendee_id")
     )
     @JsonIgnore
-    private Set<User> attendees;
+    private List<User> attendees;
 
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -73,7 +75,7 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     @JsonIgnore
-    private Set<User> savedBy;
+    private List<User> savedBy;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     Set<EventReviews> reviews;
@@ -171,19 +173,19 @@ public class Event {
         this.category = category;
     }
 
-    public Set<User> getAttendees() {
+    public List<User> getAttendees() {
         return attendees;
     }
 
-    public void setAttendees(Set<User> attendees) {
+    public void setAttendees(List<User> attendees) {
         this.attendees = attendees;
     }
 
-    public Set<User> getSavedBy() {
+    public List<User> getSavedBy() {
         return savedBy;
     }
 
-    public void setSavedBy(Set<User> savedBy) {
+    public void setSavedBy(List<User> savedBy) {
         this.savedBy = savedBy;
     }
 
@@ -225,13 +227,13 @@ public class Event {
 
     public void addAttendee(User user){
         if(attendees == null)
-            attendees = new HashSet<>();
+            attendees = new ArrayList<>();
         attendees.add(user);
     }
 
     public void saveEvent(User user){
         if(savedBy == null)
-            savedBy = new HashSet<>();
+            savedBy = new ArrayList<>();
         savedBy.add(user);
     }
 

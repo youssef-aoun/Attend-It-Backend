@@ -9,10 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -68,7 +65,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "event_id")
     )
     @JsonIgnore
-    private Set<Event> eventsAttended;
+    private List<Event> eventsAttended;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
@@ -79,14 +76,14 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "event_id")
     )
     @JsonIgnore
-    private Set<Event> eventsSaved;
+    private List<Event> eventsSaved;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
-    Set<EventReviews> reviews;
+    List<EventReviews> reviews;
 
     @ManyToMany(fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -226,19 +223,19 @@ public class User implements UserDetails {
         this.eventsOrganized = eventsOrganized;
     }
 
-    public Set<Event> getEventsAttended() {
+    public List<Event> getEventsAttended() {
         return eventsAttended;
     }
 
-    public void setEventsAttended(Set<Event> eventsAttended) {
+    public void setEventsAttended(List<Event> eventsAttended) {
         this.eventsAttended = eventsAttended;
     }
 
-    public Set<Event> getEventsSaved() {
+    public List<Event> getEventsSaved() {
         return eventsSaved;
     }
 
-    public void setEventsSaved(Set<Event> eventsSaved) {
+    public void setEventsSaved(List<Event> eventsSaved) {
         this.eventsSaved = eventsSaved;
     }
 
@@ -252,11 +249,11 @@ public class User implements UserDetails {
     }
 
 
-    public Set<EventReviews> getReviews() {
+    public List<EventReviews> getReviews() {
         return reviews;
     }
 
-    public void setReviews(Set<EventReviews> reviews) {
+    public void setReviews(List<EventReviews> reviews) {
         this.reviews = reviews;
     }
 
@@ -279,19 +276,19 @@ public class User implements UserDetails {
 
     public void attendEvent(Event event){
         if(eventsAttended == null)
-            eventsAttended = new HashSet<>();
+            eventsAttended = new ArrayList<>();
         eventsAttended.add(event);
     }
 
     public void saveEvent(Event event){
         if(eventsSaved == null)
-            eventsSaved = new HashSet<>();
+            eventsSaved = new ArrayList<>();
         eventsSaved.add(event);
     }
 
     public void addReviewByUser(EventReviews review){
         if(reviews == null)
-            reviews = new HashSet<>();
+            reviews = new ArrayList<>();
         reviews.add(review);
     }
 

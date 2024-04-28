@@ -37,5 +37,4 @@ application.properties
 /sql-scripts/creating-entities/insert-users.sql
 /sql-scripts/creating-entities/inserting-roles.sql
 /src/main/java/com/attendit/Attend/It/security
-events_images
 src/main/java/com/attendit/Attend/It/controller/othercontrollers/ImageController.java

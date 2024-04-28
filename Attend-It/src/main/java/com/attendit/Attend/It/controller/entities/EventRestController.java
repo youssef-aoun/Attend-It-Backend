@@ -3,6 +3,7 @@ package com.attendit.Attend.It.controller.entities;
 import com.attendit.Attend.It.dto.EventCreationRequest;
 import com.attendit.Attend.It.dto.EventUpdateRequest;
 import com.attendit.Attend.It.entities.event.Event;
+import com.attendit.Attend.It.security.config.JWTUtils;
 import com.attendit.Attend.It.service.event.EventService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -19,10 +20,12 @@ import java.util.Set;
 public class EventRestController {
 
     private final EventService eventService;
+    private final JWTUtils jwtUtils;
 
     @Autowired
-    public EventRestController(EventService eventService) {
+    public EventRestController(EventService eventService, JWTUtils jwtUtils) {
         this.eventService = eventService;
+        this.jwtUtils = jwtUtils;
     }
 
     @GetMapping("")
@@ -51,7 +54,7 @@ public class EventRestController {
     }
 
     @GetMapping("/search-event/{eventTitle}")
-    public Event getEventByTitle(@PathVariable("eventTitle") String eventTitle) {
+    public List<Event> getEventByTitle(@PathVariable("eventTitle") String eventTitle) {
         eventTitle = eventTitle.replace("-", " "); // Replace hyphens with spaces
         return eventService.findEventByTitle(eventTitle);
     }
@@ -71,7 +74,8 @@ public class EventRestController {
     @PostMapping("")
     public Event addEvent(@RequestBody EventCreationRequest eventCreationRequest){
         Event theEvent = eventCreationRequest.getEvent();
-        int organizerId = eventCreationRequest.getOrganizerId();
+        String token = eventCreationRequest.getToken();
+        int organizerId = jwtUtils.extractUserId(token);
         theEvent.setTitle(theEvent.getTitle().replace(" ", "-"));
         theEvent.setId(0);
         return eventService.save(theEvent, organizerId);

@@ -4,7 +4,7 @@ import com.attendit.Attend.It.entities.event.Event;
 
 public class EventCreationRequest {
     private Event event;
-    private int organizerId;
+    private String token;
 
     public Event getEvent() {
         return event;
@@ -14,11 +14,11 @@ public class EventCreationRequest {
         this.event = event;
     }
 
-    public int getOrganizerId() {
-        return organizerId;
+    public String getToken() {
+        return token;
     }
 
-    public void setOrganizerId(int organizerId) {
-        this.organizerId = organizerId;
+    public void setToken(String token) {
+        this.token = token;
     }
 }
