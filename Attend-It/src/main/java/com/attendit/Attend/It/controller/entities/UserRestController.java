@@ -6,6 +6,7 @@ import com.attendit.Attend.It.entities.roles.Role;
 import com.attendit.Attend.It.service.role.RoleService;
 import com.attendit.Attend.It.service.user.UserService;
 import com.attendit.Attend.It.entities.user.User;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -76,6 +77,7 @@ public class UserRestController {
     @DeleteMapping("/{userId}")
     public String deleteUser(@PathVariable int userId){
         User user = userService.findUserById(userId, "ROLE_USER");
+
         if(user == null){
             return "User with ID " + userId + " not found!";
         }

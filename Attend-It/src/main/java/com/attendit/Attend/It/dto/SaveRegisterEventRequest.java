@@ -5,30 +5,30 @@ import com.attendit.Attend.It.entities.user.User;
 
 public class SaveRegisterEventRequest {
 
-    private Event event;
-    private User user;
+    private int eventId;
+    private String token;
 
     public SaveRegisterEventRequest() {
     }
 
-    public SaveRegisterEventRequest(Event event, User user) {
-        this.event = event;
-        this.user = user;
+    public SaveRegisterEventRequest(int eventId, String token) {
+        this.eventId = eventId;
+        this.token = token;
     }
 
-    public Event getEvent() {
-        return event;
+    public int getEventId() {
+        return eventId;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
     }
 
-    public User getUser() {
-        return user;
+    public String getToken() {
+        return token;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

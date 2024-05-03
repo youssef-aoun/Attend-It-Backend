@@ -44,6 +44,9 @@ public class Event {
     @Column(name = "number_of_seats")
     private int numberOfSeats;
 
+    @Column(name = "remaining_seats")
+    private int remainingSeats;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizer_id")
     @JsonIgnore
@@ -202,6 +205,14 @@ public class Event {
         this.numberOfSeats = numberOfSeats;
     }
 
+    public int getRemainingSeats() {
+        return remainingSeats;
+    }
+
+    public void setRemainingSeats(int remainingSeats) {
+        this.remainingSeats = remainingSeats;
+    }
+
     public void setStatus(LocalDate currentDate) {
         LocalDate machineDate = LocalDate.now();
         if (date.isBefore(machineDate)) {
@@ -209,7 +220,11 @@ public class Event {
         } else if (date.isEqual(machineDate)) {
             status = "ongoing";
         } else {
-            status = "upcoming";
+            if(remainingSeats == 0)
+                status = "Fully Booked";
+            else{
+                status = "Upcoming";
+            }
         }
     }
 

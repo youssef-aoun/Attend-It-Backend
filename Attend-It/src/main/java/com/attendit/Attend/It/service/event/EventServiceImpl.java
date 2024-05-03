@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService{
@@ -39,6 +42,8 @@ public class EventServiceImpl implements EventService{
     public Event save(Event event, int organizerId) {
         Optional<User> organizerOptional = userRepository.findById(organizerId);
         User organizer = organizerOptional.orElseThrow(() -> new EntityNotFoundException("User not found with id: " + organizerId));
+        if(organizer.isVerified() == false)
+            throw new EntityNotFoundException("You are not verified, please verify your account");
         event.setOrganizer(organizer);
         event.setDateOfCreation(LocalDateTime.now());
         return eventRepository.save(event);
@@ -63,7 +68,20 @@ public class EventServiceImpl implements EventService{
 
     @Override
     public List<Event> findAll() {
-        return eventRepository.findAll();
+        List<Event> events = eventRepository.findAll();
+
+        // Use Comparator to compare events by date difference from today
+        Comparator<Event> byDateDifference = Comparator.comparingLong(event -> Math.abs(getDateDifference(event.getDate())));
+
+        // Sort events by closest to today's date
+        List<Event> sortedEvents = events.stream()
+                .sorted(byDateDifference)
+                .collect(Collectors.toList());
+
+        return sortedEvents;
+    }
+    private long getDateDifference(LocalDate eventDate) {
+        return Math.abs(eventDate.toEpochDay() - LocalDate.now().toEpochDay());
     }
 
     @Override

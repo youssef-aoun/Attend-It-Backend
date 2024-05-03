@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8" />
@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link  " href="/dashboard/userList">
+                <a class="nav-link " href="/dashboard/userList">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa fa-user text-dark text-lg"></i>
                     </div>
@@ -48,9 +48,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="/dashboard/eventList">
+                <a class="nav-link active" href="/dashboard/eventList">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-calendar text-dark text-lg"></i>
+                        <i class="fa fa-calendar text-white text-lg"></i>
                     </div>
                     <span class="nav-link-text ms-1">Events</span>
                 </a>
@@ -60,9 +60,9 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Site Management</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link active " href="/dashboard/employeeList">
+                <a class="nav-link  " href="/dashboard/employeeList">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-user-plus text-white text-lg"></i>
+                        <i class="fa fa-user-plus text-dark text-lg"></i>
                     </div>
                     <span class="nav-link-text ms-1">Admins / Employees</span>
                 </a>
@@ -70,7 +70,7 @@
         </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
-        <a class="btn bg-gradient-primary mt-3 w-100" href="/logout">Logout</a>
+        <a class="btn bg-gradient-primary mt-3 w-100" href="/dashboard/logout">Logout</a>
     </div>
 </aside>
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -190,71 +190,116 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        Add Employee/Admin
-                        <a href="/dashboard/employeeList" class="btn btn-danger float-end">Back</a>
+                        View Event
+                        <a href="/dashboard/eventList" class="btn btn-danger float-end">Back</a>
                     </h4>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/dashboard/save}" th:object="${user}" method="post">
+                    <form th:action="@{/dashboard/viewEvent}" th:object="${event}" method="post">
+                        <input type="hidden" th:name="eventId" th:value="${event.getId()}" />
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label>First Name</label>
-                                    <input type="text" th:field="*{firstName}" class="form-control">
+                                    <label>Title</label>
+                                    <span th:text="*{title}" class="form-control"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label>Last Name</label>
-                                    <input type="text" th:field="*{lastName}" class="form-control">
+                                    <label>Organizer</label>
+                                    <span th:text="*{organizer.getUsername()}" class="form-control"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label>Username</label>
-                                    <input type="text" th:field="*{username}" class="form-control">
+                                    <label>Date</label>
+                                    <span th:text="${event.date != null ? event.date.toString() : ''}" class="form-control"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label>Email</label>
-                                    <input type="email" th:field="*{email}" class="form-control">
+                                    <label>Time</label>
+                                    <span th:text="*{time}" class="form-control"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label>Password</label>
-                                    <input type="password" th:field="*{password}" class="form-control">
+                                    <label>Location</label>
+                                    <span th:text="*{location}" class="form-control"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label>Phone Number</label>
-                                    <input type="text" th:field="*{phoneNumber}" class="form-control">
+                                    <label>Number of Seats</label>
+                                    <span th:text="*{numberOfSeats}" class="form-control"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Remaining Seats</label>
+                                    <span th:text="*{remainingSeats}" class="form-control"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label>Select Role</label>
-                                    <select name="role" class="form-select" id="roleSelect" required>
-                                        <option value="">Select Role</option>
-                                        <option value="ROLE_EMPLOYEE">Employee</option>
-                                        <option value="ROLE_ADMIN">Admin</option>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        Please select a role.
-                                    </div>
+                                    <label>Number of Attendees</label>
+                                    <span th:text="${event.numberOfSeats - event.remainingSeats}" class="form-control"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="mb-3 text-end">
-                                    <br/>
-                                    <button type="submit" name="save" class="btn btn-primary">Save</button>
+                                <div class="mb-6">
+                                    <label>Description</label>
+                                    <span th:text="*{description}" class="form-control"></span>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                             </div>
                         </div>
-
                     </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>
+                                Attendees List
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped-columns">
+                                <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Status</th>
+                                    <th>Email</th>
+                                    <th>Username</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${attendeesList}">
+                                    <!-- Populate table cells with user data -->
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastName}"></td>
+                                    <td th:text="${user.isAccountNonLocked() ? 'Active' : 'Inactive'}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.username}"></td>
+                                    <!-- Add action links/buttons -->
+                                    <td><center>
+                                        <a th:href="@{/dashboard/removeAttendee(
+                                                userId=${user.getId()},
+                                                eventId = ${event.getId()})}" class="btn btn-danger btn-sm"
+                                           onclick="if (!(confirm('Are you sure you want to remove this user from this event?'))) return false">Remove from Event</a>
+                                    </center>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -363,7 +408,6 @@
 <script src="http://localhost:63342/Backend/Attend-It/src/main/resources/static/assets/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="http://localhost:63342/Backend/Attend-It/src/main/resources/static/assets/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="http://localhost:63342/Backend/Attend-It/src/main/resources/static/assets/js/plugins/chartjs.min.js"></script>
-<script src="http://localhost:63342/Backend/Attend-It/src/main/resources/static/assets/js/backend-handle.js"></script>
 
 <script>
     var win = navigator.platform.indexOf('Win') > -1;

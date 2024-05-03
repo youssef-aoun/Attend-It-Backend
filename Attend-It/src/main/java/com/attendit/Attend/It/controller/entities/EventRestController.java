@@ -76,8 +76,10 @@ public class EventRestController {
         Event theEvent = eventCreationRequest.getEvent();
         String token = eventCreationRequest.getToken();
         int organizerId = jwtUtils.extractUserId(token);
+
         theEvent.setTitle(theEvent.getTitle().replace(" ", "-"));
         theEvent.setId(0);
+        theEvent.setRemainingSeats(theEvent.getNumberOfSeats());
         return eventService.save(theEvent, organizerId);
     }
 
@@ -85,6 +87,7 @@ public class EventRestController {
     public Event updateEvent(@PathVariable int eventId, @RequestBody EventUpdateRequest eventUpdateRequest){
         Event eventToUpdate = eventService.findEventById(eventId);
         Event updatedEvent = eventUpdateRequest.getEvent();
+        int organizerId = jwtUtils.extractUserId(eventUpdateRequest.getToken());
         updatedEvent.setDate(eventToUpdate.getDate());
         if(updatedEvent.getId() == 0){
             updatedEvent.setId(eventId);
